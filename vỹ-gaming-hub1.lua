@@ -1,7 +1,7 @@
 _G.Settings = {
     Main = {
         ["Auto Farm Level"] = false,
-
+		
 		["Distance Mob Aura"] = 1000,
         ["Mob Aura"] = false,
 		
@@ -9,7 +9,7 @@ _G.Settings = {
 		["Auto New World"] = false,
 		["Auto Saber"] = false,
 		["Auto Pole"] = false,
-
+		
 		--World2
 		["Auto Third World"] = false,
     },
@@ -18,6 +18,16 @@ _G.Settings = {
 		["Select Boss"] = {},
 		["Auto Farm Boss"] = false,
 		["Auto Quest Boss"] = true,
+	},
+
+	RaceV4 = {
+		["Auto Trial V4"] = false,
+		["Auto Kill Complete Trial V4"] = false,
+		["Reset Character"] = false,
+	},
+
+	Misc = {
+		["ESP Fruit"] = false,
 	},
 
     Setting = {
@@ -3077,6 +3087,41 @@ function GetBossName()
 	end
 end
 
+function UpdateDevilChams()
+	for i,v in pairs(game.Workspace:GetChildren()) do
+		pcall(function()
+			if _G.Settings.Misc["ESP Fruit"] then
+				if string.find(v.Name, "Fruit") then   
+					if not v.Handle:FindFirstChild('NameEsp'..Number) then
+						local bill = Instance.new('BillboardGui',v.Handle)
+						bill.Name = 'NameEsp'..Number
+						bill.ExtentsOffset = Vector3.new(0, 1, 0)
+						bill.Size = UDim2.new(1,200,1,30)
+						bill.Adornee = v.Handle
+						bill.AlwaysOnTop = true
+						local name = Instance.new('TextLabel',bill)
+						name.Font = Enum.Font.GothamSemibold
+						name.FontSize = "Size14"
+						name.TextWrapped = true
+						name.Size = UDim2.new(1,0,1,0)
+						name.TextYAlignment = 'Top'
+						name.BackgroundTransparency = 1
+						name.TextStrokeTransparency = 0.5
+						name.TextColor3 = Color3.fromRGB(255, 255, 255)
+						name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+					else
+						v.Handle['NameEsp'..Number].TextLabel.Text = (v.Name ..'   \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Handle.Position).Magnitude/3) ..' Distance')
+					end
+				end
+			else
+				if v.Handle:FindFirstChild('NameEsp'..Number) then
+					v.Handle:FindFirstChild('NameEsp'..Number):Destroy()
+				end
+			end
+		end)
+	end
+end
+
 local ScreenGui1 = Instance.new("ScreenGui")
 local ImageButton1 = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
@@ -6018,4 +6063,21 @@ end)
 Setting:AddToggle("Skill X",_G.Settings.Setting["Skill X"],function(value)
     _G.Settings.Setting["Skill X"] = value
     SaveSettings()
+end)
+
+local Misc = Library:AddTab("Misc","11156061121")
+
+Misc:AddSeperator("ESP Menu")
+
+Misc:AddToggle("ESP Fruit",_G.Settings.Misc["ESP Fruit"],function(value)
+	_G.Settings.Misc["ESP Fruit"] = value
+	SaveSettings()
+end)
+
+spawn(function()
+	while wait() do
+		if _G.Settings.Misc["ESP Fruit"] then
+			UpdateDevilChams()
+		end
+	end
 end)

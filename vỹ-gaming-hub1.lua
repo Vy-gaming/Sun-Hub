@@ -5787,6 +5787,196 @@ spawn(function()
 	end
 end)
 
+local M = Library:AddTab("Item","9606626859")
+
+if World1 then
+	M:AddSeperator("Take Saber")
+	M:AddToggle("Auto Saber",_G.Settings.Main["Auto Saber"],function(value)
+		_G.Settings.Main["Auto Saber"] = value
+		SaveSettings()
+	end)
+	
+	spawn(function()
+		while wait() do
+			if _G.Settings.Main["Auto Saber"] and game.Players.LocalPlayer.Data.Level.Value >= 200 and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Saber") and not game.Players.LocalPlayer.Character:FindFirstChild("Saber") then
+				if Auto_Farm_Level then
+					_G.Settings.Main["Auto Farm Level"] = false
+				end
+				if game:GetService("Workspace").Map.Jungle.Final.Part.Transparency == 0 then
+					if game:GetService("Workspace").Map.Jungle.QuestPlates.Door.Transparency == 0 then
+						if (CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+							toTarget(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame)
+							wait(1)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate1.Button.CFrame
+							wait(1)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate2.Button.CFrame
+							wait(1)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate3.Button.CFrame
+							wait(1)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate4.Button.CFrame
+							wait(1)
+							game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Jungle.QuestPlates.Plate5.Button.CFrame
+							wait(1) 
+						else
+							toTarget(CFrame.new(-1612.55884, 36.9774132, 148.719543, 0.37091279, 3.0717151e-09, -0.928667724, 3.97099491e-08, 1, 1.91679348e-08, 0.928667724, -4.39869794e-08, 0.37091279))
+						end
+					else
+						if game:GetService("Workspace").Map.Desert.Burn.Part.Transparency == 0 then
+							if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Torch") or game.Players.LocalPlayer.Character:FindFirstChild("Torch") then
+								EquipWeapon("Torch")
+								toTarget(CFrame.new(1114.61475, 5.04679728, 4350.22803, -0.648466587, -1.28799094e-09, 0.761243105, -5.70652914e-10, 1, 1.20584542e-09, -0.761243105, 3.47544882e-10, -0.648466587))
+							else
+								toTarget(CFrame.new(-1610.00757, 11.5049858, 164.001587, 0.984807551, -0.167722285, -0.0449818149, 0.17364943, 0.951244235, 0.254912198, 3.42372805e-05, -0.258850515, 0.965917408))                 
+							end
+						else
+							if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan") ~= 0 then
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","GetCup")
+								wait(0.5)
+								EquipWeapon("Cup")
+								wait(0.5)
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","FillCup",game:GetService("Players").LocalPlayer.Character.Cup)
+								wait(0)
+								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","SickMan") 
+							else
+								if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == nil then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
+								elseif  game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 0 then
+									if game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader") or game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader") then
+										toTarget(CFrame.new(-2967.59521, -4.91089821, 5328.70703, 0.342208564, -0.0227849055, 0.939347804, 0.0251603816, 0.999569714, 0.0150796166, -0.939287126, 0.0184739735, 0.342634559))
+										for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+											if v.Name == "Mob Leader" then
+												repeat wait()
+													StartMagnet = true
+													FastAttack = true
+													if _G.Settings.Setting["Auto Buso Haki"] then
+														if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+															game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+														end
+													end
+													if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Settings.Setting["Select Weapon"]) then
+														wait()
+														EquipWeapon(_G.Settings.Setting["Select Weapon"])
+													end
+													toTarget(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+													PosMon = v.HumanoidRootPart.CFrame
+													if not _G.Settings.Setting["Fast Attack"] then
+														game:GetService'VirtualUser':CaptureController()
+														game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+													end
+													v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+													v.Humanoid.JumpPower = 0
+													v.Humanoid.WalkSpeed = 0
+													v.HumanoidRootPart.CanCollide = false
+													v.Humanoid:ChangeState(11)
+												until v.Humanoid.Health <= 0 or _G.Settings.Main["Auto Saber"] == false
+											end
+										end
+									end
+								elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon") == 1 then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","RichSon")
+									wait(0.5)
+									EquipWeapon("Relic")
+									wait(0.5)
+									toTarget(CFrame.new(-1404.91504, 29.9773273, 3.80598116, 0.876514494, 5.66906877e-09, 0.481375456, 2.53851997e-08, 1, -5.79995607e-08, -0.481375456, 6.30572643e-08, 0.876514494))
+								end
+							end
+						end
+					end
+				else
+					if game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert") or game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert") then
+						toTarget(CFrame.new(-1401.85046, 29.9773273, 8.81916237, 0.85820812, 8.76083845e-08, 0.513301849, -8.55007443e-08, 1, -2.77243419e-08, -0.513301849, -2.00944328e-08, 0.85820812))
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == "Saber Expert" then
+								repeat wait()
+									StartMagnet = true
+									FastAttack = true
+									if _G.Settings.Setting["Auto Buso Haki"] then
+										if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+											game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+										end
+									end
+									if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Settings.Setting["Select Weapon"]) then
+										wait()
+										EquipWeapon(_G.Settings.Setting["Select Weapon"])
+									end
+									toTarget(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+									PosMon = v.HumanoidRootPart.CFrame
+									if not _G.Settings.Setting["Fast Attack"] then
+										game:GetService'VirtualUser':CaptureController()
+										game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+									end
+									v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+									v.Humanoid.JumpPower = 0
+									v.Humanoid.WalkSpeed = 0
+									v.HumanoidRootPart.CanCollide = false
+									v.Humanoid:ChangeState(11)
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
+								until v.Humanoid.Health <= 0 or _G.Settings.Main["Auto Saber"] == false
+								if v.Humanoid.Health <= 0 then
+									game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress","PlaceRelic")
+								end
+								_G.Settings.Main["Auto Farm Level"] = true
+							end
+						end
+					end
+				end
+			end
+		end
+	end)
+
+	M:AddSeperator("Take Pole")
+	M:AddToggle("Auto Pole",_G.Settings.Main["Auto Pole"],function(value)
+		_G.Settings.Main["Auto Pole"] = value
+		SaveSettings()
+	end)
+
+	spawn(function()
+		while wait() do
+			if _G.Settings.Main["Auto Pole"] then
+				if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+					repeat wait() toTarget(CFrame.new()) until (CFrame.new().Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not _G.Settings.Main["Auto Pole"]
+					if (CFrame.new().Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 4 then
+						wait(1.1)
+						game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",SkyExp2Quest,3)
+					end
+				elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+					if game:GetService("Workspace").Enemies:FindFirstChild("Thunder God") then
+						for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+							if v.Name == "Thunder God" then
+								repeat wait()
+									if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Thunder God") then
+										if _G.Settings.Setting["Auto Buso Haki"] then
+											if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+											end
+										end
+										if not game.Players.LocalPlayer.Character:FindFirstChild(_G.Settings.Setting["Select Weapon"]) then
+											wait()
+											EquipWeapon(_G.Settings.Setting["Select Weapon"])
+										end
+										StartMagnet = true
+										FastAttack = true
+										toTarget(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+										PosMon = v.HumanoidRootPart.CFrame
+										v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+										v.Humanoid.JumpPower = 0
+										v.Humanoid.WalkSpeed = 0
+										v.HumanoidRootPart.CanCollide = false
+										v.Humanoid:ChangeState(11)								
+									end
+								until _G.Settings.Main["Auto Pole"] == false or not v.Parent or v.Humanoid.Health <= 0
+								StartMagnet = false
+								FastAttack = false
+							else
+								toTarget(CFrame.new(-7748.0185546875, 5606.80615234375, -2305.898681640625))
+							end
+						end
+					end
+				end
+			end
+		end
+	end)
+end
 local Setting = Library:AddTab("Setting","9606644121")
 
 Setting:AddSeperator("Choose Setting")
